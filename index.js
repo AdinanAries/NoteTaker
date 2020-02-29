@@ -25,8 +25,12 @@ app.get("/api/notes", (req, res) => {
 });
 
 //API route for adding notes
+//This endpoint to take just notes as string and generate the note ID using a third party library
 app.post("/api/notes", (req, res) => {
+  //code to generate note ID
+
   var newNote = req.body();
+  //returns ID plus added notes to client side for easy manipulation of data
 });
 
 //API route to delet note
