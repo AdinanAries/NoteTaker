@@ -3,26 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="styles/style.css" type="text/css" re="stylesheet">
+
+    <link href="/styles/style.css" type="text/css" rel="stylesheet" />
     <title>Your Notes</title>
   </head>
   <body>
-    
     <div class="wrapper">
-        <p>Notes</p>
-        <div class="notes">
-            <div class="toolbar">
-                <p>Add Note</p>
+      <p id="PageTitle">Notes Taker</p>
+      <div class="notes">
+        <div class="toolbar">
+          <div id="AddNote">
+            <p style="text-align: center;">Add New Note</p>
+            <textarea id="AddNotedTextFld"></textarea>
+            <div id="AddNoteBtn">
+              <p
+                style="margin: auto; position: absolute; top: 50%; transform: translateY(-50%);"
+              >
+                <img src="SaveIcon.png" style="width: 24px; height: 22px" />
+                <sup style="font-size: 15px;">Save</sup>
+              </p>
             </div>
-            <div class="allNotes">
-                <div class="eachNote">
-
-                </div>
-            </div>
+          </div>
         </div>
+        <div class="allNotes">
+          <p style="text-align: center; padding-top: 5px;">Current Notes</p>
+          <div id="notesList">
+          <div class="eachNote">
+            <div class="noteTxt"></div>
+            <div class="deleteNoteBtn">
+              
+              <p>
+                <img src="DeleteIcon.png" style="width: 24px; height: 22px" />
+                <sup style="font-size: 15px;">Delete</sup>
+                </p>
+            </div>
+          </div>
+          <div>
+        </div>
+      </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="scripts/app.js"></script>
+    <script src="/scripts/script.js"></script>
   </body>
 </html>

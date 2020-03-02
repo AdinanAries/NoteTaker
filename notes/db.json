@@ -1,8 +1,4 @@
 {
-  "firstObject": {
-    "note": "This is the first note"
-  },
-  "secondObject": {
-    "note": "This is the second note"
-  }
+  "firstObject": "This is first Note",
+  "secondObject": "This is second note"
 }
