@@ -18,16 +18,17 @@ body {
   border-radius: 4px;
 }
 .allNotes {
-  background-color: turquoise;
+  background-color: white;
 }
 
 #AddNote {
   padding: 5px;
-  background-color: turquoise;
+  background-color: white;
   border-radius: 4px;
   margin-bottom: 5px;
 }
 #AddNoteBtn {
+  cursor: pointer;
   display: flex;
   justify-content: center;
   position: relative;
@@ -39,6 +40,8 @@ body {
   text-align: center;
 }
 #AddNotedTextFld {
+  background-color: #ecec;
+  border: 0;
   width: calc(100% - 10px);
   min-height: 100px;
 }
@@ -51,6 +54,7 @@ body {
 }
 
 .deleteNoteBtn {
+  cursor: pointer;
   display: flex;
   justify-content: center;
   position: absolute;
@@ -64,7 +68,7 @@ body {
   right: 5px;
 }
 .noteTxt {
-  background-color: white;
+  background-color: steelblue;
   min-height: 60px;
   margin: 4px;
   padding: 5px;

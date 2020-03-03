@@ -6,10 +6,8 @@ const fs = require("fs");
 const app = express();
 
 var Notes;
-fs.readFile("./notes/db.json", "utf8", function(err, contents) {
+fs.readFile("./db/db.json", "utf8", function(err, contents) {
   Notes = JSON.parse(contents);
-  console.log(Notes);
-  //console.log(JSON.stringify(Notes));
 });
 
 //route for getting notes.html
@@ -21,17 +19,14 @@ app.get("/notes", (req, res) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-//adding static assets
-app.use(express.static(path.join(__dirname, "staticAssets")));
-
 //route to get my css file
-app.get("/styles/style.css", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/styles", "style.css"));
+app.get("/assets/css/styles.css", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/assets/css", "styles.css"));
 });
 
 //route for getting my js file
-app.get("/scripts/script.js", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/scripts", "app.js"));
+app.get("/assets/js/index.js", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/assets/js", "index.js"));
 });
 
 //route for getting index.html
@@ -41,36 +36,52 @@ app.get("/", (req, res) => {
 
 //API route for getting notes
 app.get("/api/notes", (req, res) => {
-  res.json(JSON.stringify(Notes));
+  res.json(Notes);
 });
 
 //API route for adding notes
 //This endpoint to take just notes as string and generate the note ID using a third party library
 app.post("/api/notes", (req, res) => {
-  const newNoteID = uuid.v4(); //new id for newly added note
-  var newNoteText = req.body.note; // actual note content from ajax post request
-  console.log(newNoteID);
-  console.log(newNoteText);
+  var newId = uuid.v4();
+  var newTitle = req.body.title;
+  var newNote = req.body.text;
+
+  const newObj = {
+    id: newId,
+    title: newTitle,
+    text: newNote
+  };
   //adding new note to Notes
-  Notes[newNoteID] = newNoteText;
-  res.json(JSON.stringify(Notes));
-  //write code that updates or replaces existing db.json on the file system
+  Notes.push(newObj);
+  let newJson = JSON.stringify(Notes);
+
+  fs.writeFile("./db/db.json", newJson, function(err) {
+    if (err) throw err;
+    console.log(`${JSON.stringify(newObj)} had been added to db.json`);
+    //reset Notes to newly created object
+    fs.readFile("./db/db.json", "utf8", function(err, contents) {
+      Notes = JSON.parse(contents);
+    });
+  });
+
+  res.json(Notes);
 });
 
 //API route to delet note
 app.delete("/api/notes/:id", (req, res) => {
-  //checking is this note exists
-  NoteID = req.params.id;
-  //checking is provided id exist for Notes Object
-  const found = Notes.hasOwnProperty(NoteID);
+  Notes = Notes.filter(el => el.id !== req.params.id);
 
-  if (found) {
-    delete Notes[NoteID];
-    res.json(JSON.stringify(Notes));
-    //write code that replaces or updates existing db.json file
-  } else {
-    res.status(400).json({ msg: "There isn't any note with provided id" });
-  }
+  let newJson = JSON.stringify(Notes);
+
+  fs.writeFile("./db/db.json", newJson, function(err) {
+    if (err) throw err;
+    //reset Notes to newly created object
+    fs.readFile("./db/db.json", "utf8", function(err, contents) {
+      Notes = JSON.parse(contents);
+    });
+  });
+
+  res.json(Notes);
 });
 
 const PORT = 5000;

@@ -44,3 +44,17 @@ function saveNote(noteText) {
   });
 }
 //saveNote("This is another note");
+
+//function to delete notes
+function deleteNote(id) {
+  $.ajax({
+    type: "DELETE",
+    url: `/api/notes/${id}`,
+    success: function(res) {
+      alert("note deleted successfully");
+      alert(res);
+    }
+  });
+}
+
+deleteNote("firstObject");
